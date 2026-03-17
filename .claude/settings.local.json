@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm --version:*)",
+      "Bash(npm install:*)",
+      "Bash(where.exe:*)",
+      "Bash(pnpm.cmd:*)",
+      "Bash(npm root:*)",
+      "Bash(C:UsersTomasAppDataRoamingnpmpnpm.cmd --version)",
+      "Bash(node:*)",
+      "Bash(export PATH=\"$PATH:/c/Users/Tomas/AppData/Roaming/npm\")",
+      "Bash(pnpm create:*)",
+      "Bash(export PATH=\"/c/Users/Tomas/AppData/Roaming/npm:/c/Program Files/nodejs:$PATH\")",
+      "Bash(export PATH=\"/c/Users/Tomas/AppData/Roaming/npm:/c/Program Files/nodejs:/usr/bin:$PATH\")",
+      "Bash(pnpm add:*)",
+      "Bash(pnpm dlx shadcn@latest init:*)",
+      "Bash(pnpm dlx:*)",
+      "Bash(pnpm build:*)",
+      "Bash(pnpm install:*)",
+      "Bash(docker compose build:*)",
+      "Bash(docker compose:*)",
+      "Bash(curl:*)",
+      "Bash(docker info:*)",
+      "Bash(npx tailwindcss --help:*)",
+      "Bash(tr:*)"
+    ]
+  }
+}

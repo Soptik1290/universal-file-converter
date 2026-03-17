@@ -32,8 +32,8 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b">
+    <div className="min-h-screen bg-background bg-dots">
+      <header className="sticky top-0 z-50 border-b border-border/50 bg-background/80 glass">
         <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
           <div className="flex items-center gap-3">
             <svg
@@ -46,7 +46,7 @@ export default function Home() {
               strokeWidth="2"
               strokeLinecap="round"
               strokeLinejoin="round"
-              className="text-primary"
+              className="text-primary drop-shadow-[0_0_8px_var(--glow)]"
             >
               <path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" />
               <path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" />
@@ -54,7 +54,7 @@ export default function Home() {
               <path d="M12 3v18" />
               <path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2" />
             </svg>
-            <h1 className="text-xl font-semibold">Universal File Converter</h1>
+            <h1 className="text-xl font-semibold tracking-tight">Universal File Converter</h1>
           </div>
           <ThemeToggle />
         </div>

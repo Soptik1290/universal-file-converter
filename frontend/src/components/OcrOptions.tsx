@@ -36,10 +36,10 @@ export function OcrOptions({ options, onChange }: OcrOptionsProps) {
           <button
             key={lang.code}
             onClick={() => toggleLang(lang.code)}
-            className={`rounded-md border px-3 py-1.5 text-sm transition-colors ${
+            className={`rounded-md border px-3 py-1.5 text-sm transition-all duration-200 ${
               selected.includes(lang.code)
-                ? "border-primary bg-primary text-primary-foreground"
-                : "border-border hover:bg-muted"
+                ? "border-primary bg-primary text-primary-foreground shadow-glow"
+                : "border-border hover:bg-muted hover:border-primary/40"
             }`}
           >
             {lang.label}

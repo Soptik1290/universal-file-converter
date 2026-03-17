@@ -37,7 +37,9 @@ export function FormatSelector({
               <Badge
                 key={cat}
                 variant={selectedCategory === cat ? "default" : "outline"}
-                className="cursor-pointer"
+                className={`cursor-pointer transition-all duration-200 ${
+                  selectedCategory === cat ? "shadow-glow" : "hover:border-primary/50 hover:shadow-glow"
+                }`}
                 onClick={() => onCategoryChange(cat)}
               >
                 {getCategoryLabel(cat)}
@@ -59,7 +61,11 @@ export function FormatSelector({
             <Badge
               key={format}
               variant={selectedFormat === format ? "default" : "outline"}
-              className="cursor-pointer transition-colors hover:bg-primary/10"
+              className={`cursor-pointer transition-all duration-200 ${
+                selectedFormat === format
+                  ? "shadow-glow"
+                  : "hover:border-primary/40 hover:bg-primary/5"
+              }`}
               onClick={() => onSelect(format)}
             >
               {getFormatLabel(format)}

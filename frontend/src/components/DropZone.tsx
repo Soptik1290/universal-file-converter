@@ -55,10 +55,10 @@ export function DropZone({ onFilesAdded }: DropZoneProps) {
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
       animate={isDragOver ? { scale: 1.01 } : { scale: 1 }}
-      className={`relative flex cursor-pointer flex-col items-center justify-center gap-4 rounded-xl border-2 border-dashed p-12 transition-colors ${
+      className={`relative flex cursor-pointer flex-col items-center justify-center gap-4 rounded-xl border-2 border-dashed p-12 transition-all duration-300 ${
         isDragOver
-          ? "border-primary bg-primary/5"
-          : "border-muted-foreground/25 hover:border-muted-foreground/50"
+          ? "border-primary bg-primary/5 shadow-glow"
+          : "border-muted-foreground/25 hover:border-primary/50 hover:shadow-glow"
       }`}
     >
       <input
@@ -70,19 +70,19 @@ export function DropZone({ onFilesAdded }: DropZoneProps) {
       />
 
       <div
-        className={`rounded-full p-4 transition-colors ${
-          isDragOver ? "bg-primary/10" : "bg-muted"
+        className={`rounded-full p-4 transition-all duration-300 ${
+          isDragOver ? "bg-primary/15 shadow-glow" : "bg-muted"
         }`}
       >
         <Upload
-          className={`h-8 w-8 ${
-            isDragOver ? "text-primary" : "text-muted-foreground"
+          className={`h-8 w-8 transition-all duration-300 ${
+            isDragOver ? "text-primary scale-110" : "text-muted-foreground"
           }`}
         />
       </div>
 
       <div className="text-center">
-        <p className="text-lg font-medium">
+        <p className="text-lg font-semibold tracking-tight">
           {isDragOver ? "Drop files here" : "Drop files here or click to browse"}
         </p>
         <p className="mt-1 text-sm text-muted-foreground">

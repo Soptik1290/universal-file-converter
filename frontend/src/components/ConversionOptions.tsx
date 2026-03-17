@@ -34,10 +34,10 @@ export function ConversionOptions({
   return (
     <AnimatePresence>
       <motion.div
-        initial={{ height: 0, opacity: 0 }}
-        animate={{ height: "auto", opacity: 1 }}
-        exit={{ height: 0, opacity: 0 }}
-        className="space-y-4 overflow-hidden"
+        initial={{ opacity: 0, y: -8 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -8 }}
+        className="space-y-4"
       >
         {category === "image" && (
           <>
@@ -104,7 +104,7 @@ export function ConversionOptions({
               onChange={(e) =>
                 onChange({ ...options, dpi: Number(e.target.value) })
               }
-              className="rounded border bg-background px-3 py-1.5 text-sm"
+              className="rounded-lg border border-border bg-background px-3 py-1.5 text-sm transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30 focus:outline-none"
             >
               <option value={72}>72 (Screen)</option>
               <option value={150}>150 (Print)</option>

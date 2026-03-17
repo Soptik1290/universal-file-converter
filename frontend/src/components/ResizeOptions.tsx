@@ -83,7 +83,7 @@ export function ResizeOptions({ resize, onChange }: ResizeOptionsProps) {
                 preset: "custom",
               })
             }
-            className="w-24 rounded border bg-background px-2 py-1.5 text-sm"
+            className="w-24 rounded-lg border border-border bg-background px-2 py-1.5 text-sm transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30 focus:outline-none"
           />
           <span className="text-muted-foreground">x</span>
           <input
@@ -97,7 +97,7 @@ export function ResizeOptions({ resize, onChange }: ResizeOptionsProps) {
                 preset: "custom",
               })
             }
-            className="w-24 rounded border bg-background px-2 py-1.5 text-sm"
+            className="w-24 rounded-lg border border-border bg-background px-2 py-1.5 text-sm transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30 focus:outline-none"
           />
           <div className="flex items-center gap-1.5">
             <Switch

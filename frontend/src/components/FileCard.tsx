@@ -57,15 +57,15 @@ export function FileCard({
 
   return (
     <motion.div
-      layout
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
+      exit={{ opacity: 0, y: -20, scale: 0.95 }}
+      transition={{ type: "spring", stiffness: 300, damping: 25 }}
     >
       <Card
-        className={`relative p-4 ${
+        className={`relative p-4 shadow-card transition-all duration-300 hover:shadow-glow ${
           file.status === "error" ? "border-destructive" : ""
-        }`}
+        } ${file.status === "done" ? "border-primary/30" : ""}`}
       >
         {/* Remove button */}
         <button
@@ -78,7 +78,7 @@ export function FileCard({
         {/* File info */}
         <div className="flex items-start gap-3 pr-8">
           {/* Preview / Icon */}
-          <div className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-muted">
+          <div className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-muted ring-1 ring-foreground/5">
             {file.preview ? (
               <img
                 src={file.preview}
@@ -138,7 +138,7 @@ export function FileCard({
                   options={file.options}
                   onChange={onOptionsChange}
                 />
-                <Button onClick={onConvert} className="w-full">
+                <Button onClick={onConvert} className="w-full bg-brand-gradient text-white shadow-glow transition-all duration-200 hover:opacity-90 hover:shadow-glow-strong">
                   Convert to {getFormatLabel(file.selectedFormat)}
                 </Button>
               </>

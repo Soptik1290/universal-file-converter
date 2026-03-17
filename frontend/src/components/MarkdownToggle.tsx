@@ -12,20 +12,20 @@ export function MarkdownToggle({ value, onChange }: MarkdownToggleProps) {
       <div className="flex gap-2">
         <button
           onClick={() => onChange("interpret")}
-          className={`rounded-md border px-3 py-1.5 text-sm transition-colors ${
+          className={`rounded-md border px-3 py-1.5 text-sm transition-all duration-200 ${
             value === "interpret"
-              ? "border-primary bg-primary text-primary-foreground"
-              : "border-border hover:bg-muted"
+              ? "border-primary bg-primary text-primary-foreground shadow-glow"
+              : "border-border hover:bg-muted hover:border-primary/40"
           }`}
         >
           Interpret formatting
         </button>
         <button
           onClick={() => onChange("literal")}
-          className={`rounded-md border px-3 py-1.5 text-sm transition-colors ${
+          className={`rounded-md border px-3 py-1.5 text-sm transition-all duration-200 ${
             value === "literal"
-              ? "border-primary bg-primary text-primary-foreground"
-              : "border-border hover:bg-muted"
+              ? "border-primary bg-primary text-primary-foreground shadow-glow"
+              : "border-border hover:bg-muted hover:border-primary/40"
           }`}
         >
           Preserve as literal text

@@ -15,10 +15,9 @@ export function QualitySlider({ value, onChange }: QualitySliderProps) {
         <span className="text-sm font-medium">{value}%</span>
       </div>
       <Slider
-        value={[value]}
-        onValueChange={(val) => {
-          const arr = val as number[];
-          onChange(arr[0]);
+        value={value}
+        onValueChange={(val: number | readonly number[]) => {
+          onChange(Array.isArray(val) ? val[0] : val);
         }}
         min={1}
         max={100}

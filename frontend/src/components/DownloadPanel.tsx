@@ -13,6 +13,7 @@ export function DownloadPanel({ downloadUrl, filename }: DownloadPanelProps) {
     <div className="flex items-center gap-2">
       <Button
         size="sm"
+        className="bg-brand-gradient text-white shadow-glow transition-all duration-200 hover:opacity-90 hover:shadow-glow-strong"
         render={<a href={downloadUrl} download={filename} />}
       >
         <Download className="mr-1.5 h-4 w-4" />

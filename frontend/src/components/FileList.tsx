@@ -34,7 +34,7 @@ export function FileList({
     <div className="mt-6 space-y-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <h2 className="text-sm font-medium">Uploaded files</h2>
+          <h2 className="text-sm font-semibold tracking-tight">Uploaded files</h2>
           <Badge variant="secondary">{files.length}</Badge>
         </div>
         <Button variant="ghost" size="sm" onClick={onClearAll}>

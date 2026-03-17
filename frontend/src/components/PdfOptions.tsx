@@ -16,7 +16,7 @@ export function PdfOptions({ options, onChange }: PdfOptionsProps) {
         <select
           value={options.pdfPageSize ?? "A4"}
           onChange={(e) => onChange({ ...options, pdfPageSize: e.target.value })}
-          className="w-full rounded border bg-background px-3 py-1.5 text-sm"
+          className="w-full rounded-lg border border-border bg-background px-3 py-1.5 text-sm transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30 focus:outline-none"
         >
           <option value="A4">A4</option>
           <option value="Letter">Letter</option>
@@ -32,7 +32,7 @@ export function PdfOptions({ options, onChange }: PdfOptionsProps) {
           onChange={(e) =>
             onChange({ ...options, pdfOrientation: e.target.value })
           }
-          className="w-full rounded border bg-background px-3 py-1.5 text-sm"
+          className="w-full rounded-lg border border-border bg-background px-3 py-1.5 text-sm transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30 focus:outline-none"
         >
           <option value="portrait">Portrait</option>
           <option value="landscape">Landscape</option>
@@ -44,7 +44,7 @@ export function PdfOptions({ options, onChange }: PdfOptionsProps) {
         <select
           value={options.pdfMargins ?? "normal"}
           onChange={(e) => onChange({ ...options, pdfMargins: e.target.value })}
-          className="w-full rounded border bg-background px-3 py-1.5 text-sm"
+          className="w-full rounded-lg border border-border bg-background px-3 py-1.5 text-sm transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30 focus:outline-none"
         >
           <option value="normal">Normal</option>
           <option value="narrow">Narrow</option>
@@ -57,7 +57,7 @@ export function PdfOptions({ options, onChange }: PdfOptionsProps) {
         <select
           value={options.pdfFont ?? "sans-serif"}
           onChange={(e) => onChange({ ...options, pdfFont: e.target.value })}
-          className="w-full rounded border bg-background px-3 py-1.5 text-sm"
+          className="w-full rounded-lg border border-border bg-background px-3 py-1.5 text-sm transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30 focus:outline-none"
         >
           <option value="sans-serif">Sans-serif (Arial)</option>
           <option value="serif">Serif (Times New Roman)</option>
@@ -75,7 +75,7 @@ export function PdfOptions({ options, onChange }: PdfOptionsProps) {
           }
           min={8}
           max={24}
-          className="w-full rounded border bg-background px-3 py-1.5 text-sm"
+          className="w-full rounded-lg border border-border bg-background px-3 py-1.5 text-sm transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30 focus:outline-none"
         />
       </div>
 
@@ -96,7 +96,7 @@ export function PdfOptions({ options, onChange }: PdfOptionsProps) {
           value={options.pdfHeader ?? ""}
           onChange={(e) => onChange({ ...options, pdfHeader: e.target.value })}
           placeholder="Optional header"
-          className="w-full rounded border bg-background px-3 py-1.5 text-sm"
+          className="w-full rounded-lg border border-border bg-background px-3 py-1.5 text-sm transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30 focus:outline-none"
         />
       </div>
 
@@ -107,7 +107,7 @@ export function PdfOptions({ options, onChange }: PdfOptionsProps) {
           value={options.pdfFooter ?? ""}
           onChange={(e) => onChange({ ...options, pdfFooter: e.target.value })}
           placeholder="Optional footer"
-          className="w-full rounded border bg-background px-3 py-1.5 text-sm"
+          className="w-full rounded-lg border border-border bg-background px-3 py-1.5 text-sm transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30 focus:outline-none"
         />
       </div>
     </div>
