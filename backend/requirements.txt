@@ -1,0 +1,28 @@
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0
+python-multipart>=0.0.18
+python-magic>=0.4.27
+pydantic>=2.10.0
+pydantic-settings>=2.7.0
+loguru>=0.7.3
+# Image conversion
+Pillow>=10.2.0
+pillow-heif>=0.14.0
+rawpy>=0.19.0
+# Document conversion
+pypandoc>=1.12
+python-docx>=1.1.0
+WeasyPrint>=60.0
+ebooklib>=0.18
+chardet>=5.2.0
+pyyaml>=6.0.1
+toml>=0.10.2
+# Data conversion
+pandas>=2.2.0
+openpyxl>=3.1.2
+pyarrow>=15.0.0
+# Presentation conversion
+python-pptx>=0.6.23
+# OCR
+pytesseract>=0.3.10
+pdf2image>=1.17.0
