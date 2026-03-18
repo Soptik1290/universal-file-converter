@@ -5,6 +5,7 @@ import { Trash2 } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { FileCard } from "./FileCard";
+import { BatchPanel } from "./BatchPanel";
 import type { ConversionOptions, FormatRegistry, UploadedFile } from "@/lib/types";
 
 interface FileListProps {
@@ -16,6 +17,7 @@ interface FileListProps {
   onSelectCategory: (id: string, category: string) => void;
   onOptionsChange: (id: string, options: ConversionOptions) => void;
   onConvert: (file: UploadedFile) => void;
+  onBatchConvert?: (format: string) => void;
 }
 
 export function FileList({
@@ -27,6 +29,7 @@ export function FileList({
   onSelectCategory,
   onOptionsChange,
   onConvert,
+  onBatchConvert,
 }: FileListProps) {
   if (files.length === 0) return null;
 
@@ -34,7 +37,9 @@ export function FileList({
     <div className="mt-6 space-y-4">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <h2 className="text-sm font-semibold tracking-tight">Uploaded files</h2>
+          <h2 className="text-sm font-medium uppercase tracking-wide text-muted-foreground">
+            Uploaded files
+          </h2>
           <Badge variant="secondary">{files.length}</Badge>
         </div>
         <Button variant="ghost" size="sm" onClick={onClearAll}>
@@ -42,6 +47,14 @@ export function FileList({
           Clear all
         </Button>
       </div>
+
+      {onBatchConvert && (
+        <BatchPanel
+          files={files}
+          formatRegistry={formatRegistry}
+          onConvertAll={onBatchConvert}
+        />
+      )}
 
       <div className="grid gap-4">
         <AnimatePresence mode="popLayout">

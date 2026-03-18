@@ -34,3 +34,7 @@ tmp/
 dist/
 build/
 *.log
+
+# Design Prompts
+master-prompt.md
+ui-redesign-prompt.md

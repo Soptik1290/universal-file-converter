@@ -12,7 +12,7 @@ export function PdfOptions({ options, onChange }: PdfOptionsProps) {
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
       <div className="space-y-1.5">
-        <label className="text-sm">Page size</label>
+        <label className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Page size</label>
         <select
           value={options.pdfPageSize ?? "A4"}
           onChange={(e) => onChange({ ...options, pdfPageSize: e.target.value })}
@@ -26,7 +26,7 @@ export function PdfOptions({ options, onChange }: PdfOptionsProps) {
       </div>
 
       <div className="space-y-1.5">
-        <label className="text-sm">Orientation</label>
+        <label className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Orientation</label>
         <select
           value={options.pdfOrientation ?? "portrait"}
           onChange={(e) =>
@@ -40,7 +40,7 @@ export function PdfOptions({ options, onChange }: PdfOptionsProps) {
       </div>
 
       <div className="space-y-1.5">
-        <label className="text-sm">Margins</label>
+        <label className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Margins</label>
         <select
           value={options.pdfMargins ?? "normal"}
           onChange={(e) => onChange({ ...options, pdfMargins: e.target.value })}
@@ -53,7 +53,7 @@ export function PdfOptions({ options, onChange }: PdfOptionsProps) {
       </div>
 
       <div className="space-y-1.5">
-        <label className="text-sm">Font</label>
+        <label className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Font</label>
         <select
           value={options.pdfFont ?? "sans-serif"}
           onChange={(e) => onChange({ ...options, pdfFont: e.target.value })}
@@ -66,7 +66,7 @@ export function PdfOptions({ options, onChange }: PdfOptionsProps) {
       </div>
 
       <div className="space-y-1.5">
-        <label className="text-sm">Font size</label>
+        <label className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Font size</label>
         <input
           type="number"
           value={options.pdfFontSize ?? 12}
@@ -80,7 +80,7 @@ export function PdfOptions({ options, onChange }: PdfOptionsProps) {
       </div>
 
       <div className="flex items-center justify-between">
-        <label className="text-sm">Page numbers</label>
+        <label className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Page numbers</label>
         <Switch
           checked={options.pdfPageNumbers ?? true}
           onCheckedChange={(pdfPageNumbers) =>
@@ -90,7 +90,7 @@ export function PdfOptions({ options, onChange }: PdfOptionsProps) {
       </div>
 
       <div className="space-y-1.5">
-        <label className="text-sm">Header text</label>
+        <label className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Header text</label>
         <input
           type="text"
           value={options.pdfHeader ?? ""}
@@ -101,7 +101,7 @@ export function PdfOptions({ options, onChange }: PdfOptionsProps) {
       </div>
 
       <div className="space-y-1.5">
-        <label className="text-sm">Footer text</label>
+        <label className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Footer text</label>
         <input
           type="text"
           value={options.pdfFooter ?? ""}

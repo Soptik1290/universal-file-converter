@@ -12,7 +12,7 @@ export function DataOptions({ options, onChange }: DataOptionsProps) {
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
       <div className="space-y-1.5">
-        <label className="text-sm">Delimiter</label>
+        <label className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Delimiter</label>
         <select
           value={options.delimiter ?? "auto"}
           onChange={(e) => onChange({ ...options, delimiter: e.target.value })}
@@ -27,7 +27,7 @@ export function DataOptions({ options, onChange }: DataOptionsProps) {
       </div>
 
       <div className="space-y-1.5">
-        <label className="text-sm">Encoding</label>
+        <label className="text-xs font-medium uppercase tracking-wider text-muted-foreground">Encoding</label>
         <select
           value={options.encoding ?? "auto"}
           onChange={(e) => onChange({ ...options, encoding: e.target.value })}
@@ -43,7 +43,7 @@ export function DataOptions({ options, onChange }: DataOptionsProps) {
       </div>
 
       <div className="flex items-center justify-between sm:col-span-2">
-        <label className="text-sm">First row is header</label>
+        <label className="text-xs font-medium uppercase tracking-wider text-muted-foreground">First row is header</label>
         <Switch
           checked={options.headerRow ?? true}
           onCheckedChange={(headerRow) => onChange({ ...options, headerRow })}

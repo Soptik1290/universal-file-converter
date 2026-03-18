@@ -30,8 +30,10 @@ PILLOW_FORMAT_MAP = {
     "bmp": "BMP",
     "tiff": "TIFF",
     "webp": "WEBP",
+    "heic": "HEIF",
     "avif": "AVIF",
     "ico": "ICO",
+    "jxl": "JPEG XL",
     "pdf": "PDF",
 }
 
@@ -69,7 +71,7 @@ class ImageConverter(BaseConverter):
             img = ImageOps.exif_transpose(img) or img
 
         # Handle transparency for non-transparent outputs
-        if output_format in ("jpg", "jpeg", "bmp", "pdf"):
+        if output_format in ("jpg", "jpeg", "bmp", "pdf", "heic"):
             img = self._flatten_alpha(img, options.get("backgroundColor", "#ffffff"))
 
         # Save with format-specific options
@@ -162,6 +164,10 @@ class ImageConverter(BaseConverter):
             kwargs["method"] = 6
         elif output_format == "avif":
             kwargs["quality"] = quality
+        elif output_format == "heic":
+            kwargs["quality"] = quality
+        elif output_format == "jxl":
+            kwargs["quality"] = quality
         elif output_format == "tiff":
             kwargs["compression"] = "tiff_lzw"
         elif output_format == "pdf":
@@ -218,5 +224,5 @@ class ImageConverter(BaseConverter):
     def supported_output_formats(self) -> list[str]:
         return [
             "jpg", "png", "gif", "bmp", "tiff", "webp",
-            "avif", "ico", "jxl", "pdf", "svg",
+            "heic", "avif", "ico", "jxl", "pdf", "svg",
         ]

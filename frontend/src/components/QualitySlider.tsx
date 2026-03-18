@@ -11,8 +11,12 @@ export function QualitySlider({ value, onChange }: QualitySliderProps) {
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
-        <label className="text-sm">Quality</label>
-        <span className="text-sm font-medium">{value}%</span>
+        <label className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+          Quality
+        </label>
+        <span className={`font-mono text-xs ${
+          value >= 80 ? "text-green-500" : value >= 40 ? "text-amber-500" : "text-red-500"
+        }`}>{value}%</span>
       </div>
       <Slider
         value={value}
@@ -23,6 +27,9 @@ export function QualitySlider({ value, onChange }: QualitySliderProps) {
         max={100}
         step={1}
       />
+      <p className="text-xs text-muted-foreground">
+        Lower = smaller file, higher = better quality
+      </p>
     </div>
   );
 }

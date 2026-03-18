@@ -6,9 +6,10 @@ import { Upload } from "lucide-react";
 
 interface DropZoneProps {
   onFilesAdded: (files: FileList | File[]) => void;
+  compact?: boolean;
 }
 
-export function DropZone({ onFilesAdded }: DropZoneProps) {
+export function DropZone({ onFilesAdded, compact }: DropZoneProps) {
   const [isDragOver, setIsDragOver] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -54,11 +55,14 @@ export function DropZone({ onFilesAdded }: DropZoneProps) {
       onDragEnter={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
-      animate={isDragOver ? { scale: 1.01 } : { scale: 1 }}
-      className={`relative flex cursor-pointer flex-col items-center justify-center gap-4 rounded-xl border-2 border-dashed p-12 transition-all duration-300 ${
+      animate={isDragOver ? { scale: 1.02 } : { scale: 1 }}
+      transition={{ duration: 0.2, ease: "easeOut" }}
+      className={`relative flex cursor-pointer flex-col items-center justify-center gap-4 rounded-xl border-2 border-dashed bg-card transition-all duration-200 ${
+        compact ? "min-h-[120px] p-6" : "min-h-[200px] p-12"
+      } ${
         isDragOver
           ? "border-primary bg-primary/5 shadow-glow"
-          : "border-muted-foreground/25 hover:border-primary/50 hover:shadow-glow"
+          : "border-border hover:border-primary/40 hover:shadow-glow"
       }`}
     >
       <input
@@ -69,26 +73,43 @@ export function DropZone({ onFilesAdded }: DropZoneProps) {
         onChange={handleChange}
       />
 
-      <div
-        className={`rounded-full p-4 transition-all duration-300 ${
-          isDragOver ? "bg-primary/15 shadow-glow" : "bg-muted"
+      <motion.div
+        animate={{ y: [0, -6, 0] }}
+        transition={{ duration: 3, ease: "easeInOut", repeat: Infinity }}
+        className={`rounded-xl p-3 transition-all duration-200 ${
+          isDragOver ? "bg-primary/15" : "bg-muted"
         }`}
       >
         <Upload
-          className={`h-8 w-8 transition-all duration-300 ${
-            isDragOver ? "text-primary scale-110" : "text-muted-foreground"
-          }`}
+          className={`transition-all duration-200 ${
+            compact ? "h-5 w-5" : "h-8 w-8"
+          } ${isDragOver ? "text-primary scale-110" : "text-muted-foreground"}`}
         />
-      </div>
+      </motion.div>
 
       <div className="text-center">
-        <p className="text-lg font-semibold tracking-tight">
-          {isDragOver ? "Drop files here" : "Drop files here or click to browse"}
+        <p className="text-sm font-medium">
+          {isDragOver ? "Release to upload" : "Drop files here or click to browse"}
         </p>
-        <p className="mt-1 text-sm text-muted-foreground">
-          Upload any file type — images, documents, spreadsheets, and more
-        </p>
+        {!compact && (
+          <p className="mt-1 text-xs text-muted-foreground">
+            Images, documents, spreadsheets, and more
+          </p>
+        )}
       </div>
+
+      {!compact && (
+        <button
+          type="button"
+          className="rounded-md border border-primary/30 px-3 py-1 text-xs font-medium text-primary transition-colors hover:bg-primary/10"
+          onClick={(e) => {
+            e.stopPropagation();
+            inputRef.current?.click();
+          }}
+        >
+          Browse files
+        </button>
+      )}
     </motion.div>
   );
 }

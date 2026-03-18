@@ -7,7 +7,7 @@ FORMAT_MAP: dict = {
         ],
         "outputs": [
             "jpg", "png", "gif", "bmp", "tiff", "webp",
-            "avif", "ico", "jxl", "pdf", "svg",
+            "heic", "avif", "ico", "jxl", "pdf", "svg",
         ],
         "options": ["quality", "resize", "strip_metadata", "background_color"],
     },

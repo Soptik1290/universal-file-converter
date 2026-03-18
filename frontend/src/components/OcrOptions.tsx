@@ -28,19 +28,24 @@ export function OcrOptions({ options, onChange }: OcrOptionsProps) {
     }
   };
 
+  const chipClass = (active: boolean) =>
+    `rounded-md border px-3 py-1.5 text-xs font-medium transition-colors ${
+      active
+        ? "bg-primary/15 border-primary text-primary"
+        : "border-border text-muted-foreground hover:border-primary/40 hover:text-foreground"
+    }`;
+
   return (
     <div className="space-y-2">
-      <label className="text-sm">OCR Languages</label>
+      <label className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+        OCR Languages
+      </label>
       <div className="flex flex-wrap gap-2">
         {LANGUAGES.map((lang) => (
           <button
             key={lang.code}
             onClick={() => toggleLang(lang.code)}
-            className={`rounded-md border px-3 py-1.5 text-sm transition-all duration-200 ${
-              selected.includes(lang.code)
-                ? "border-primary bg-primary text-primary-foreground shadow-glow"
-                : "border-border hover:bg-muted hover:border-primary/40"
-            }`}
+            className={chipClass(selected.includes(lang.code))}
           >
             {lang.label}
           </button>

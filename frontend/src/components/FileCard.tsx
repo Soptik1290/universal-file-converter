@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import {
   X,
@@ -11,17 +12,29 @@ import {
   Loader2,
   AlertCircle,
   RefreshCw,
+  ChevronDown,
+  ArrowRight,
 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 import { FormatSelector } from "./FormatSelector";
 import { ConversionOptions } from "./ConversionOptions";
 import { ProgressBar } from "./ProgressBar";
 import { DownloadPanel } from "./DownloadPanel";
 import { CATEGORY_COLORS, getCategoryLabel, getFormatLabel } from "@/lib/formats";
 import { formatFileSize } from "@/lib/utils";
-import type { ConversionOptions as ConversionOptionsType, FormatRegistry, UploadedFile } from "@/lib/types";
+import { estimateOutputSize } from "@/lib/estimateSize";
+import type {
+  ConversionOptions as ConversionOptionsType,
+  FormatRegistry,
+  UploadedFile,
+} from "@/lib/types";
 
 interface FileCardProps {
   file: UploadedFile;
@@ -54,23 +67,54 @@ export function FileCard({
 }: FileCardProps) {
   const category = file.selectedCategory || file.detection?.category;
   const CategoryIcon = category ? CATEGORY_ICONS[category] || FileText : FileText;
+  const [optionsOpen, setOptionsOpen] = useState(false);
+
+  // Auto-expand options when format is selected
+  useEffect(() => {
+    if (file.selectedFormat) {
+      setOptionsOpen(true);
+    }
+  }, [file.selectedFormat]);
+
+  // Estimated output size
+  const estimatedSize = useMemo(() => {
+    if (!file.selectedFormat || !file.detection) return null;
+    return estimateOutputSize(
+      file.size,
+      file.detection.format,
+      file.selectedFormat,
+      file.options.quality,
+      file.options.resize?.preset,
+      file.options.resize?.width,
+      file.options.resize?.height
+    );
+  }, [
+    file.size,
+    file.detection,
+    file.selectedFormat,
+    file.options.quality,
+    file.options.resize,
+  ]);
+
+  const isSizeSmaller = estimatedSize !== null && estimatedSize < file.size;
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      layout
+      initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20, scale: 0.95 }}
-      transition={{ type: "spring", stiffness: 300, damping: 25 }}
+      exit={{ opacity: 0, y: -8 }}
+      transition={{ duration: 0.25, ease: [0.25, 0.46, 0.45, 0.94] }}
     >
       <Card
-        className={`relative p-4 shadow-card transition-all duration-300 hover:shadow-glow ${
+        className={`group relative rounded-xl border border-border p-4 shadow-card transition-all hover:border-primary/20 hover:shadow-md ${
           file.status === "error" ? "border-destructive" : ""
-        } ${file.status === "done" ? "border-primary/30" : ""}`}
+        } ${file.status === "done" ? "border-primary/30 shadow-glow" : ""}`}
       >
-        {/* Remove button */}
+        {/* Remove button — visible on hover */}
         <button
           onClick={onRemove}
-          className="absolute right-2 top-2 rounded-full p-1 text-muted-foreground hover:bg-muted hover:text-foreground"
+          className="absolute right-2 top-2 rounded-full p-1 text-muted-foreground opacity-0 transition-opacity hover:bg-muted hover:text-foreground group-hover:opacity-100"
         >
           <X className="h-4 w-4" />
         </button>
@@ -78,7 +122,7 @@ export function FileCard({
         {/* File info */}
         <div className="flex items-start gap-3 pr-8">
           {/* Preview / Icon */}
-          <div className="flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-muted ring-1 ring-foreground/5">
+          <div className="flex h-12 w-12 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-muted">
             {file.preview ? (
               <img
                 src={file.preview}
@@ -86,7 +130,7 @@ export function FileCard({
                 className="h-full w-full object-cover"
               />
             ) : (
-              <CategoryIcon className="h-6 w-6 text-muted-foreground" />
+              <CategoryIcon className="h-5 w-5 text-muted-foreground" />
             )}
           </div>
 
@@ -94,9 +138,20 @@ export function FileCard({
             <p className="truncate text-sm font-medium" title={file.name}>
               {file.name}
             </p>
-            <p className="text-xs text-muted-foreground">
-              {formatFileSize(file.size)}
-            </p>
+            <div className="flex items-center gap-1.5">
+              <span className="font-mono text-xs text-muted-foreground">
+                {formatFileSize(file.size)}
+              </span>
+              {estimatedSize !== null && file.status === "idle" && (
+                <span className="flex items-center gap-1 font-mono text-xs">
+                  <ArrowRight className="h-3 w-3 text-muted-foreground" />
+                  <span className={isSizeSmaller ? "text-green-500" : "text-amber-500"}>
+                    ~{formatFileSize(estimatedSize)}
+                  </span>
+                  <span className="text-muted-foreground">(est.)</span>
+                </span>
+              )}
+            </div>
             {file.detection && category && (
               <Badge
                 variant="secondary"
@@ -131,14 +186,32 @@ export function FileCard({
 
             {file.selectedFormat && category && (
               <>
-                <ConversionOptions
-                  category={category}
-                  inputFormat={file.detection.format}
-                  outputFormat={file.selectedFormat}
-                  options={file.options}
-                  onChange={onOptionsChange}
-                />
-                <Button onClick={onConvert} className="w-full bg-brand-gradient text-white shadow-glow transition-all duration-200 hover:opacity-90 hover:shadow-glow-strong">
+                <Collapsible open={optionsOpen} onOpenChange={setOptionsOpen}>
+                  <CollapsibleTrigger className="flex w-full items-center gap-1.5 text-xs font-medium uppercase tracking-wider text-muted-foreground transition-colors hover:text-foreground">
+                    <ChevronDown
+                      className={`h-3.5 w-3.5 transition-transform ${
+                        optionsOpen ? "rotate-0" : "-rotate-90"
+                      }`}
+                    />
+                    Options
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <div className="pt-3">
+                      <ConversionOptions
+                        category={category}
+                        inputFormat={file.detection.format}
+                        outputFormat={file.selectedFormat}
+                        options={file.options}
+                        onChange={onOptionsChange}
+                      />
+                    </div>
+                  </CollapsibleContent>
+                </Collapsible>
+
+                <Button
+                  onClick={onConvert}
+                  className="h-10 w-full bg-primary text-primary-foreground transition-all hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/25"
+                >
                   Convert to {getFormatLabel(file.selectedFormat)}
                 </Button>
               </>
@@ -147,8 +220,12 @@ export function FileCard({
         )}
 
         {file.status === "converting" && (
-          <div className="mt-3">
+          <div className="mt-3 space-y-2">
             <ProgressBar progress={file.progress} />
+            <div className="flex items-center justify-center gap-2 text-xs text-muted-foreground">
+              <Loader2 className="h-3.5 w-3.5 animate-spin" />
+              Converting...
+            </div>
           </div>
         )}
 
@@ -157,6 +234,7 @@ export function FileCard({
             <DownloadPanel
               downloadUrl={file.downloadUrl}
               filename={`${file.name.replace(/\.[^.]+$/, "")}.${file.selectedFormat}`}
+              onConvertAgain={onRetry}
             />
           </div>
         )}

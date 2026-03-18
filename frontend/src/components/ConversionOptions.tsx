@@ -50,9 +50,12 @@ export function ConversionOptions({
             <ResizeOptions
               resize={options.resize}
               onChange={(resize) => onChange({ ...options, resize })}
+              outputFormat={outputFormat}
             />
             <div className="flex items-center justify-between">
-              <label className="text-sm">Strip EXIF metadata</label>
+              <label className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                Strip EXIF metadata
+              </label>
               <Switch
                 checked={options.stripMetadata ?? false}
                 onCheckedChange={(stripMetadata) =>
@@ -62,14 +65,16 @@ export function ConversionOptions({
             </div>
             {!["png", "gif", "webp", "tiff", "svg"].includes(outputFormat) && (
               <div className="flex items-center gap-3">
-                <label className="text-sm">Background color</label>
+                <label className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                  Background
+                </label>
                 <input
                   type="color"
                   value={options.backgroundColor ?? "#ffffff"}
                   onChange={(e) =>
                     onChange({ ...options, backgroundColor: e.target.value })
                   }
-                  className="h-8 w-8 cursor-pointer rounded border"
+                  className="h-6 w-6 cursor-pointer rounded border border-border"
                 />
               </div>
             )}
@@ -98,7 +103,9 @@ export function ConversionOptions({
 
         {category === "presentation" && (
           <div className="flex items-center gap-3">
-            <label className="text-sm">DPI</label>
+            <label className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+              DPI
+            </label>
             <select
               value={options.dpi ?? 150}
               onChange={(e) =>

@@ -1,6 +1,5 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { Switch } from "@/components/ui/switch";
 
 interface ResizeConfig {
@@ -13,50 +12,63 @@ interface ResizeConfig {
 interface ResizeOptionsProps {
   resize: ResizeConfig | undefined;
   onChange: (resize: ResizeConfig | undefined) => void;
+  outputFormat?: string;
 }
 
 const PRESETS = [
-  { label: "Thumbnail", value: 150 },
-  { label: "Small", value: 480 },
-  { label: "Medium", value: 1024 },
-  { label: "HD", value: 1920 },
-  { label: "4K", value: 3840 },
+  { key: "thumb", label: "Thumbnail (150px)", value: 150 },
+  { key: "small", label: "Small (480px)", value: 480 },
+  { key: "medium", label: "Medium (1024px)", value: 1024 },
+  { key: "hd", label: "HD (1920px)", value: 1920 },
+  { key: "4k", label: "4K (3840px)", value: 3840 },
 ];
 
-export function ResizeOptions({ resize, onChange }: ResizeOptionsProps) {
+const ICO_PRESETS = [
+  { key: "ico16", label: "16x16", value: 16 },
+  { key: "ico32", label: "32x32", value: 32 },
+  { key: "ico48", label: "48x48", value: 48 },
+  { key: "ico256", label: "256x256", value: 256 },
+];
+
+export function ResizeOptions({ resize, onChange, outputFormat }: ResizeOptionsProps) {
+  const presets = outputFormat === "ico" ? ICO_PRESETS : PRESETS;
   const activePreset = resize?.preset;
+
+  const chipClass = (active: boolean) =>
+    `rounded-md border px-3 py-1.5 text-xs font-medium transition-colors cursor-pointer ${
+      active
+        ? "bg-primary/15 border-primary text-primary"
+        : "border-border text-muted-foreground hover:border-primary/40 hover:text-foreground"
+    }`;
 
   return (
     <div className="space-y-3">
-      <label className="text-sm">Resize</label>
+      <label className="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+        Resize
+      </label>
 
       <div className="flex flex-wrap gap-1.5">
-        <Button
-          variant={!resize ? "default" : "outline"}
-          size="sm"
-          onClick={() => onChange(undefined)}
-        >
+        <button className={chipClass(!resize)} onClick={() => onChange(undefined)}>
           Original
-        </Button>
-        {PRESETS.map((p) => (
-          <Button
-            key={p.label}
-            variant={activePreset === p.label ? "default" : "outline"}
-            size="sm"
+        </button>
+        {presets.map((p) => (
+          <button
+            key={p.key}
+            className={chipClass(activePreset === p.key)}
             onClick={() =>
               onChange({
                 width: p.value,
-                preset: p.label,
+                height: outputFormat === "ico" ? p.value : undefined,
+                preset: p.key,
                 lockAspect: true,
               })
             }
           >
-            {p.label} ({p.value}px)
-          </Button>
+            {p.label}
+          </button>
         ))}
-        <Button
-          variant={activePreset === "custom" ? "default" : "outline"}
-          size="sm"
+        <button
+          className={chipClass(activePreset === "custom")}
           onClick={() =>
             onChange({
               width: resize?.width || 800,
@@ -67,7 +79,7 @@ export function ResizeOptions({ resize, onChange }: ResizeOptionsProps) {
           }
         >
           Custom
-        </Button>
+        </button>
       </div>
 
       {activePreset === "custom" && (
@@ -85,7 +97,7 @@ export function ResizeOptions({ resize, onChange }: ResizeOptionsProps) {
             }
             className="w-24 rounded-lg border border-border bg-background px-2 py-1.5 text-sm transition-colors focus:border-primary focus:ring-1 focus:ring-primary/30 focus:outline-none"
           />
-          <span className="text-muted-foreground">x</span>
+          <span className="text-xs text-muted-foreground">x</span>
           <input
             type="number"
             placeholder="Height"
@@ -106,7 +118,7 @@ export function ResizeOptions({ resize, onChange }: ResizeOptionsProps) {
                 onChange({ ...resize, lockAspect, preset: "custom" })
               }
             />
-            <label className="text-xs text-muted-foreground">Lock aspect</label>
+            <label className="text-xs text-muted-foreground">Lock</label>
           </div>
         </div>
       )}
